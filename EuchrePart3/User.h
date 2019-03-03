@@ -27,6 +27,8 @@ public:
 	std::string getSuitTrump();
 	bool getRed();
 
+	void dealDropsWorstCard(std::string);
+
 	int numberOfSpadesInHand();
 	int numberOfHeartsInHand();
 	int numberOfClubsInHand();

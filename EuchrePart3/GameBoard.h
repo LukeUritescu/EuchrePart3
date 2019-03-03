@@ -44,11 +44,14 @@ public:
 	std::string getTrumpSuitString();
 	bool getTrumpRed();
 
-
+	void addToTableHand(Cards card);
+	void deleteTableHand();
+	void wholeUp();
 	void endTheProcess();
 
 protected:
 	DeckEngine tableDeck;
+	std::vector<Cards>* tableHand;
 	User player;
 	User ai1;
 	User ai2;

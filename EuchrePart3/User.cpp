@@ -8,6 +8,19 @@ void User::acquireCard(Cards card)
 	hand.push_back(card);
 }
 
+void User::dealDropsWorstCard(std::string trumpSuit)
+{
+	int i = 0;
+	Cards tempCard;
+	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
+	{
+
+		//This is to check the values 
+		
+		i++;
+	}
+}
+
 void User::showHand(std::string name)
 {
 	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)

@@ -35,6 +35,16 @@ void GameBoard::replenishDeck()
 	}
 }
 
+void GameBoard::addToTableHand(Cards card) 
+{
+	tableHand->push_back(card);
+}
+
+void GameBoard::deleteTableHand()
+{
+	delete tableHand;
+}
+
 void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 {
 	if (player) {
@@ -54,6 +64,11 @@ void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 		AI3Dealer();
 		choose3AITrumpSuit();
 	}
+
+}
+
+void GameBoard::wholeUp()
+{
 
 }
 
