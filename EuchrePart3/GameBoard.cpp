@@ -68,10 +68,6 @@ void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 
 }
 
-void GameBoard::wholeUp()
-{
-
-}
 
 void GameBoard::playerDealer()
 {

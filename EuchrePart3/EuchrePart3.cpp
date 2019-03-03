@@ -12,5 +12,6 @@ int main()
 	deckofCards.gameTable();
 	std::cin;
 	deckofCards.endTheProcess();
+	deckofCards.deleteTableHand();
 }
 
