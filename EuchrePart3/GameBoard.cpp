@@ -13,7 +13,9 @@ void GameBoard::gameTable()
 	ai2.showHand("AI2 hand: ");
 	std::cout << "======================================" << std::endl;
 	ai3.showHand("AI3 hand: ");
+	choose1AITrumpSuit();
 
+	ai1.showHand("AI1 hand2");
 }
 
 void GameBoard::buildCardDeck()
@@ -54,7 +56,6 @@ void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 	}
 	else if (ai1) {
 		AI1Dealer();
-		choose1AITrumpSuit();
 	}
 	else if (ai2) {
 		AI2Dealer();
@@ -192,18 +193,26 @@ void GameBoard::choose1AITrumpSuit()
 	if (ai2.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "ai2 chose suit" << std::endl;
+		ai1.dealDropsWorstCard(getTrumpRed());
+		ai1.acquireCard(tableDeck.drawCard());
 	}
 	else if (ai3.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "ai3 chose suit" << std::endl;
+		ai1.dealDropsWorstCard(getTrumpRed());
+		ai1.acquireCard(tableDeck.drawCard());
 	}
 	else if (player.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "player chose suit" << std::endl;
+		ai1.dealDropsWorstCard(getTrumpRed());
+		ai1.acquireCard(tableDeck.drawCard());
 	}
 	else if (ai1.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "ai1 chose suit" << std::endl;
+		ai1.dealDropsWorstCard(getTrumpRed());
+		ai1.acquireCard(tableDeck.drawCard());
 	}
 	else {
 		ai1.whenTheDealerDoesNotLikeTrumpCard(ai1.numberOfSpadesInHand(), ai1.numberOfClubsInHand(), ai1.numberOfDiamondsInHand(), ai1.numberOfHeartsInHand());

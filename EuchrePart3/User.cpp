@@ -8,17 +8,21 @@ void User::acquireCard(Cards card)
 	hand.push_back(card);
 }
 
-void User::dealDropsWorstCard(std::string trumpSuit)
+void User::dealDropsWorstCard(bool trumpRed)
 {
 	int i = 0;
-	Cards tempCard;
+	int tempCardIndex = 0;
+	int tempCardValue = 10;
 	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
 	{
-
 		//This is to check the values 
-		
+		if (tempCardValue > it->getValue() && it->getRank() != "Jack") {
+			tempCardValue = it->getValue();
+			tempCardIndex = i;
+		}
 		i++;
 	}
+	hand.erase(hand.begin() + tempCardIndex);
 }
 
 void User::showHand(std::string name)
