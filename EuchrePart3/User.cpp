@@ -33,6 +33,60 @@ void User::showHand(std::string name)
 	}
 }
 
+int User::getIndexOfCardThatIsChosenToPlay(std::string suit, std::string rank)
+{
+	int i = 0;
+	int index = 0;
+	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
+	{
+		if (it->getSuit() == suit && it->getRank() == rank)
+			index = i;
+		i++;
+	}
+	return index;
+}
+Cards User::getCardThatIsChosenToPlay(int index)
+{
+	//chose .at because from what I googled it seems to be safer than using []
+	return hand.at(index);
+}
+
+
+void User::userChoosesCardToPlay(std::string chooseCardDependingOnsuit)
+{
+	int tempValue = 0;
+	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
+	{
+		if (chooseCardDependingOnsuit == it->getSuit()) {
+			chosenSuit = it->getSuit();
+			chosenRank = it->getRank();
+			tempValue = it->getValue();
+			if (it->getRank() == "Jack") {
+				chosenRank = it->getRank();
+				tempValue = 9;//because the hghest value is 7 normally. so 9 s the right bower and jack of same color suit will be 8 as the left bower
+			}
+			else if(tempValue < it->getValue()) //this is to check if there are multiple cards of the same suit in user's hand that they pick the highest value one
+				chosenRank = it->getRank();
+		}
+		else {
+			//This is to check the values 
+			if (tempValue < it->getValue()) {
+				chosenSuit = it->getSuit();
+				chosenRank = it->getRank();
+				tempValue = it->getValue();
+			}
+		}
+	}
+}
+std::string User::getChosenCardSuit()
+{
+	return chosenSuit;
+}
+std::string User::getChosenCardRank()
+{
+	return chosenRank;
+}
+
 int User::numberOfSpadesInHand()
 {
 	int  i = 0;
@@ -185,4 +239,6 @@ bool User::hasJackTrumpSuit(std::string suit)
 	}
 	return jackOfTheTrumpSuit;
 }
+
+
 

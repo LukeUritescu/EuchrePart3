@@ -4,7 +4,7 @@
 void GameBoard::gameTable()
 {
 	buildCardDeck();
-	chooseDealer(false, true, false, false);
+	AI1Dealer();
 	topCardSuit();
 	player.showHand("Player hand:");
 	std::cout << "======================================" << std::endl;
@@ -14,8 +14,7 @@ void GameBoard::gameTable()
 	std::cout << "======================================" << std::endl;
 	ai3.showHand("AI3 hand: ");
 	choose1AITrumpSuit();
-
-	ai1.showHand("AI1 hand2");
+	addToTableHand(getTrumpSuitString());
 }
 
 void GameBoard::buildCardDeck()
@@ -36,20 +35,17 @@ void GameBoard::replenishDeck()
 		buildCardDeck();
 	}
 }
-
-void GameBoard::addToTableHand(Cards card) 
+////TODO note Now that this adds to tableHand, once all players have placed a card then cardValueCheck claass needs to check what is the highest value for each card. 
+////make sure to have a parameter to check what the right and left bower are for the hand.
+void GameBoard::addToTableHand(std::string suit) 
 {
-	tableHand->push_back(card);
-}
-
-void GameBoard::deleteTableHand()
-{
-	delete tableHand;
+	player.userChoosesCardToPlay(suit);
+	tableHand.push_back(player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())));
 }
 
 void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 {
-	if (player) {
+	/*if (player) {
 		std::cout << "Player is the dealer" << std::endl;
 		playerDealer();
 		choosePlayerTrumpSuit();
@@ -64,7 +60,7 @@ void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 	else if (ai3) {
 		AI3Dealer();
 		choose3AITrumpSuit();
-	}
+	}*/
 
 }
 
@@ -180,6 +176,7 @@ void GameBoard::AI3Pass(int numberCardDeal)
 	}
 }
 
+//ALLL these functions below with choose... are the same just switched the order of players
 void GameBoard::choose1AITrumpSuit()
 {
 	ai2.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());

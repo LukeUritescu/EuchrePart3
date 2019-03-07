@@ -29,6 +29,13 @@ public:
 
 	void dealDropsWorstCard(bool trumpRed);
 
+	Cards getCardThatIsChosenToPlay(int index);
+	int getIndexOfCardThatIsChosenToPlay(std::string suit, std::string rank);
+
+	void userChoosesCardToPlay(std::string chooseCardDependingOnsuit);
+	std::string getChosenCardSuit();
+	std::string getChosenCardRank();
+
 	int numberOfSpadesInHand();
 	int numberOfHeartsInHand();
 	int numberOfClubsInHand();
@@ -44,6 +51,8 @@ protected:
 	int numberOfRedCards;
 	int numberOfBlackCards;
 
+	std::string chosenSuit;
+	std::string chosenRank;
 
 	bool shouldThisTopCardBeTrump;
 };
