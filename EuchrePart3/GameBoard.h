@@ -44,13 +44,20 @@ public:
 	std::string getTrumpSuitString();
 	bool getTrumpRed();
 
-	void addToTableHand(std::string suit);
+	void playerAddToTableHand(std::string suit);
+	void ai1AddToTableHand(std::string suit);
+	void ai2AddToTableHand(std::string suit);
+	void ai3AddToTableHand(std::string suit);
+
 	void deleteTableHand();
 	void endTheProcess();
 
+	void determineHandWinner(Cards card);
+
+	int checkTableHandValues(Cards card);
+
 protected:
 	DeckEngine tableDeck;
-	std::vector<Cards> tableHand;
 	User player;
 	User ai1;
 	User ai2;
@@ -58,6 +65,14 @@ protected:
 	std::string trumpSuitString;
 	bool trumpRed;
 	bool red = false;
+
+	int team1Check;
+	int team2Check;
+	int playerCardValue;
+	int ai1CardValue;
+	int ai2CardValue;
+	int ai3CardValue;
+
 };
 
 #endif // !EUCHRE_GAMEBOARD_H

@@ -31,15 +31,11 @@ public:
 
 	Cards getCardThatIsChosenToPlay(int index);
 	int getIndexOfCardThatIsChosenToPlay(std::string suit, std::string rank);
-
 	void userChoosesCardToPlay(std::string chooseCardDependingOnsuit);
 	std::string getChosenCardSuit();
 	std::string getChosenCardRank();
 
-	int numberOfSpadesInHand();
-	int numberOfHeartsInHand();
-	int numberOfClubsInHand();
-	int numberOfDiamondsInHand();
+	int numberOfASpecificSuitInHand(std::string suitName);
 
 protected:
 	std::vector<Cards> hand;

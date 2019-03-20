@@ -14,7 +14,10 @@ void GameBoard::gameTable()
 	std::cout << "======================================" << std::endl;
 	ai3.showHand("AI3 hand: ");
 	choose1AITrumpSuit();
-	addToTableHand(getTrumpSuitString());
+	playerAddToTableHand(getTrumpSuitString());
+	ai1AddToTableHand(getTrumpSuitString());
+	ai2AddToTableHand(getTrumpSuitString());
+	ai3AddToTableHand(getTrumpSuitString());
 }
 
 void GameBoard::buildCardDeck()
@@ -37,11 +40,53 @@ void GameBoard::replenishDeck()
 }
 ////TODO note Now that this adds to tableHand, once all players have placed a card then cardValueCheck claass needs to check what is the highest value for each card. 
 ////make sure to have a parameter to check what the right and left bower are for the hand.
-void GameBoard::addToTableHand(std::string suit) 
+void GameBoard::playerAddToTableHand(std::string suit) 
 {
 	player.userChoosesCardToPlay(suit);
-	tableHand.push_back(player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())));
+	playerCardValue = checkTableHandValues(player.getCardThatIsChosenToPlay((player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank()))));
+	std::cout << playerCardValue;
 }
+
+void GameBoard::ai1AddToTableHand(std::string suit)
+{
+	ai1.userChoosesCardToPlay(suit);
+	ai1CardValue = checkTableHandValues(ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())));
+}
+
+void GameBoard::ai2AddToTableHand(std::string suit)
+{
+	ai2.userChoosesCardToPlay(suit);
+	ai2CardValue = checkTableHandValues(ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())));
+
+}
+
+void GameBoard::ai3AddToTableHand(std::string suit)
+{
+	ai3.userChoosesCardToPlay(suit);
+	ai3CardValue = checkTableHandValues(ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+
+}
+
+int GameBoard::checkTableHandValues(Cards card)
+{
+	if (card.getSuit() == getTrumpSuitString() && card.getRank() == "Jack") {
+		return 9;
+	}
+	else if (card.getRed() == getTrumpRed() && card.getRank() == "Jack") {
+		return 8;
+	}
+	else {
+		return card.getValue();
+	}
+
+}
+
+void GameBoard::determineHandWinner(Cards card)
+{
+
+}
+
+
 
 void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 {
@@ -208,7 +253,7 @@ void GameBoard::choose1AITrumpSuit()
 		ai1.acquireCard(tableDeck.drawCard());
 	}
 	else {
-		ai1.whenTheDealerDoesNotLikeTrumpCard(ai1.numberOfSpadesInHand(), ai1.numberOfClubsInHand(), ai1.numberOfDiamondsInHand(), ai1.numberOfHeartsInHand());
+		ai1.whenTheDealerDoesNotLikeTrumpCard(ai1.numberOfASpecificSuitInHand("Spades"), ai1.numberOfASpecificSuitInHand("Clubs"), ai1.numberOfASpecificSuitInHand("Diamonds"), ai1.numberOfASpecificSuitInHand("Diamonds"));
 		trumpSuit(ai1.getSuitTrump(), ai1.getRed());
 		std::cout << "Dealer chose suit" << std::endl;
 	}
@@ -246,7 +291,7 @@ void GameBoard::choose2AITrumpSuit()
 		ai2.acquireCard(tableDeck.drawCard());
 	}
 	else {
-		ai2.whenTheDealerDoesNotLikeTrumpCard(ai2.numberOfSpadesInHand(), ai2.numberOfClubsInHand(), ai2.numberOfDiamondsInHand(), ai2.numberOfHeartsInHand());
+		ai1.whenTheDealerDoesNotLikeTrumpCard(ai1.numberOfASpecificSuitInHand("Spades"), ai1.numberOfASpecificSuitInHand("Clubs"), ai1.numberOfASpecificSuitInHand("Diamonds"), ai1.numberOfASpecificSuitInHand("Diamonds"));
 		trumpSuit(ai2.getSuitTrump(), ai2.getRed());
 		std::cout << "Dealer chose suit" << std::endl;
 	}
@@ -283,7 +328,7 @@ void GameBoard::choose3AITrumpSuit()
 		ai3.acquireCard(tableDeck.drawCard());
 	}
 	else {
-		ai3.whenTheDealerDoesNotLikeTrumpCard(ai3.numberOfSpadesInHand(), ai3.numberOfClubsInHand(), ai3.numberOfDiamondsInHand(), ai3.numberOfHeartsInHand());
+		ai1.whenTheDealerDoesNotLikeTrumpCard(ai1.numberOfASpecificSuitInHand("Spades"), ai1.numberOfASpecificSuitInHand("Clubs"), ai1.numberOfASpecificSuitInHand("Diamonds"), ai1.numberOfASpecificSuitInHand("Diamonds"));
 		trumpSuit(ai3.getSuitTrump(), ai3.getRed());
 		std::cout << "Dealer chose suit" << std::endl;
 	}
@@ -320,7 +365,7 @@ void GameBoard::choosePlayerTrumpSuit()
 		player.acquireCard(tableDeck.drawCard());
 	}
 	else {
-		player.whenTheDealerDoesNotLikeTrumpCard(player.numberOfSpadesInHand(), player.numberOfClubsInHand(), player.numberOfDiamondsInHand(), player.numberOfHeartsInHand());
+		ai1.whenTheDealerDoesNotLikeTrumpCard(ai1.numberOfASpecificSuitInHand("Spades"), ai1.numberOfASpecificSuitInHand("Clubs"), ai1.numberOfASpecificSuitInHand("Diamonds"), ai1.numberOfASpecificSuitInHand("Diamonds"));
 		trumpSuit(player.getSuitTrump(), player.getRed());
 		std::cout << "Dealer chose suit" << std::endl;
 	}

@@ -86,13 +86,13 @@ std::string User::getChosenCardRank()
 {
 	return chosenRank;
 }
-
-int User::numberOfSpadesInHand()
+//Can condense this into one function with a parameter where the suit name is the given one. 
+int User::numberOfASpecificSuitInHand(std::string suitName)
 {
 	int  i = 0;
 	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
 	{
-		if (it->getSuit() == "Spades") {
+		if (it->getSuit() == suitName) {
 			i++;
 		}
 
@@ -100,44 +100,6 @@ int User::numberOfSpadesInHand()
 	return i;
 }
 
-int User::numberOfClubsInHand()
-{
-	int  i = 0;
-	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
-	{
-		if (it->getSuit() == "Clubs") {
-			i++;
-		}
-
-	}
-	return i;
-}
-
-int User::numberOfHeartsInHand()
-{
-	int  i = 0;
-	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
-	{
-		if (it->getSuit() == "Hearts") {
-			i++;
-		}
-
-	}
-	return i;
-}
-
-int User::numberOfDiamondsInHand()
-{
-	int  i = 0;
-	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
-	{
-		if (it->getSuit() == "Diamonds") {
-			i++;
-		}
-
-	}
-	return i;
-}
 
 void User::whenTheDealerDoesNotLikeTrumpCard(int spades, int clubs, int diamonds, int hearts)
 {
