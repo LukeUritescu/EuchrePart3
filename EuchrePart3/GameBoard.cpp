@@ -18,6 +18,16 @@ void GameBoard::gameTable()
 	ai1AddToTableHand(getTrumpSuitString());
 	ai2AddToTableHand(getTrumpSuitString());
 	ai3AddToTableHand(getTrumpSuitString());
+	std::cout << "Player: " << player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())).getRank() << std::endl;
+	std::cout << "ai1: " << ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())).getRank() << std::endl;
+	std::cout << "ai2: " << ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())).getRank() << std::endl;
+	std::cout << "ai3: " << ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())).getRank() << std::endl;
+	//TO DO: PLAYERS ARE NOT PLAYING LEFT BOWER 
+	determineHandWinner(
+		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())), 
+		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())), 
+		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
+		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
 }
 
 void GameBoard::buildCardDeck()
@@ -39,17 +49,18 @@ void GameBoard::replenishDeck()
 	}
 }
 ////TODO note Now that this adds to tableHand, once all players have placed a card then cardValueCheck claass needs to check what is the highest value for each card. 
-////make sure to have a parameter to check what the right and left bower are for the hand.
+////Was going to use anothehr vector but I didn't want to bother with it because I wouldn't be able to know who's card is who.
 void GameBoard::playerAddToTableHand(std::string suit) 
 {
 	player.userChoosesCardToPlay(suit);
 	playerCardValue = checkTableHandValues(player.getCardThatIsChosenToPlay((player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank()))));
-	std::cout << playerCardValue;
 }
 
 void GameBoard::ai1AddToTableHand(std::string suit)
 {
 	ai1.userChoosesCardToPlay(suit);
+
+
 	ai1CardValue = checkTableHandValues(ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())));
 }
 
@@ -81,13 +92,40 @@ int GameBoard::checkTableHandValues(Cards card)
 
 }
 
-void GameBoard::determineHandWinner(Cards card)
+///Take in  trump suit and the card value given ranking theem
+void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Card, Cards ai3Card)
 {
+	bool team1Win = false;
+	if (playerCardValue > ai1CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+		if (playerCardValue > ai3CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
+	
+	else if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+		if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
 
+	if (team1Win) {
+		team1Check++;
+		std::cout << "Team 1 Wins!";
+	}
+	else {
+		team2Check++;
+		std::cout << "Team 2 Wins!";
+	}
 }
 
 
-
+///This function isn't needed
 void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 {
 	/*if (player) {

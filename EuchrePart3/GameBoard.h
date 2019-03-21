@@ -49,10 +49,9 @@ public:
 	void ai2AddToTableHand(std::string suit);
 	void ai3AddToTableHand(std::string suit);
 
-	void deleteTableHand();
 	void endTheProcess();
 
-	void determineHandWinner(Cards card);
+	void determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Card, Cards ai3Card);
 
 	int checkTableHandValues(Cards card);
 
