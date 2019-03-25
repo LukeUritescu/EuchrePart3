@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Cards.h" />
     <ClInclude Include="cardValueCheck.h" />
+    <ClInclude Include="chooseTrumpSuit.h" />
     <ClInclude Include="DeckEngine.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="pch.h" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClCompile Include="Cards.cpp" />
     <ClCompile Include="cardValueCheck.cpp" />
+    <ClCompile Include="chooseTrumpSuit.cpp" />
     <ClCompile Include="DeckEngine.cpp" />
     <ClCompile Include="EuchrePart3.cpp" />
     <ClCompile Include="GameBoard.cpp" />

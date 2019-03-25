@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <algorithm>
 #include "Cards.h"
 #include "DeckEngine.h"
 class User
@@ -31,7 +31,8 @@ public:
 
 	Cards getCardThatIsChosenToPlay(int index);
 	int getIndexOfCardThatIsChosenToPlay(std::string suit, std::string rank);
-	void userChoosesCardToPlay(std::string chooseCardDependingOnsuit);
+	void userChoosesCardToPlay(std::string chooseCardDependingOnSuit, bool chooseCardDependingOnRed);
+	void removeCardPlaced();
 	std::string getChosenCardSuit();
 	std::string getChosenCardRank();
 
@@ -46,6 +47,8 @@ protected:
 	std::string suitTrump;
 	int numberOfRedCards;
 	int numberOfBlackCards;
+
+	int index = 0;
 
 	std::string chosenSuit;
 	std::string chosenRank;

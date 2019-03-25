@@ -37,6 +37,8 @@ int User::getIndexOfCardThatIsChosenToPlay(std::string suit, std::string rank)
 {
 	int i = 0;
 	int index = 0;
+	
+
 	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
 	{
 		if (it->getSuit() == suit && it->getRank() == rank)
@@ -52,31 +54,72 @@ Cards User::getCardThatIsChosenToPlay(int index)
 }
 
 
-void User::userChoosesCardToPlay(std::string chooseCardDependingOnsuit)
+void User::userChoosesCardToPlay(std::string chooseCardDependingOnSuit, bool chooseCardDependingOnRed)
 {
 	int tempValue = 0;
+	bool tempRed = chooseCardDependingOnRed;
 	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
 	{
-		if (chooseCardDependingOnsuit == it->getSuit()) {
-			chosenSuit = it->getSuit();
-			chosenRank = it->getRank();
-			tempValue = it->getValue();
+		if (it->getSuit() == chooseCardDependingOnSuit) {
 			if (it->getRank() == "Jack") {
-				chosenRank = it->getRank();
-				tempValue = 9;//because the hghest value is 7 normally. so 9 s the right bower and jack of same color suit will be 8 as the left bower
-			}
-			else if(tempValue < it->getValue()) //this is to check if there are multiple cards of the same suit in user's hand that they pick the highest value one
-				chosenRank = it->getRank();
-		}
-		else {
-			//This is to check the values 
-			if (tempValue < it->getValue()) {
 				chosenSuit = it->getSuit();
 				chosenRank = it->getRank();
+				tempRed = it->getRed();
+				tempValue = 9;//because the highest value is 7 normally. so 9 s the right bower and jack of same color suit will be 8 as the left bower
+			}
+
+			else if (getChosenCardSuit() != chooseCardDependingOnSuit && tempValue != 8) {
+
+				chosenSuit = it->getSuit();
+				chosenRank = it->getRank();
+				tempRed = it->getRed();
+				tempValue = it->getValue();
+
+			}
+			else if (tempValue < it->getValue()) {
+
+				chosenSuit = it->getSuit();
+				chosenRank = it->getRank();
+				tempRed = it->getRed();
 				tempValue = it->getValue();
 			}
 		}
+
+		if (it->getRed() == chooseCardDependingOnRed && it->getSuit() != chooseCardDependingOnSuit) {
+			if (it->getRank() == "Jack") {
+				chosenSuit = it->getSuit();
+				chosenRank = it->getRank();
+				tempRed = it->getRed();
+				tempValue = 8;//because the highest value is 7 normally. so 9 is the right bower and jack of same color suit will be 8 as the left bower
+			}
+
+			//else if (tempValue < it->getValue() && getChosenCardSuit() != chooseCardDependingOnSuit) { //this is to check if there are multiple cards of the same suit in user's hand that they pick the highest value one
+			//	chosenSuit = it->getSuit();
+			//	chosenRank = it->getRank();
+			//	tempRed = it->getRed();
+			//	tempValue = it->getValue();
+			//}
+		}
+
+		if (it->getSuit() != chooseCardDependingOnSuit) {
+			//This is to check the values 
+			if (getChosenCardSuit() != chooseCardDependingOnSuit) {
+				if (tempValue < it->getValue()) {
+					chosenSuit = it->getSuit();
+					chosenRank = it->getRank();
+					tempRed = it->getRed();
+					tempValue = it->getValue();
+				}
+			}
+		}
 	}
+	//removeCardPlaced();
+
+}
+
+void User::removeCardPlaced() 
+{
+		hand.erase(hand.begin() + 3);
 }
 std::string User::getChosenCardSuit()
 {

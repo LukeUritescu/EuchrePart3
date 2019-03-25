@@ -6,6 +6,7 @@ void GameBoard::gameTable()
 	buildCardDeck();
 	AI1Dealer();
 	topCardSuit();
+	choose1AITrumpSuit();
 	player.showHand("Player hand:");
 	std::cout << "======================================" << std::endl;
 	ai1.showHand("AI1 hand: ");
@@ -13,12 +14,12 @@ void GameBoard::gameTable()
 	ai2.showHand("AI2 hand: ");
 	std::cout << "======================================" << std::endl;
 	ai3.showHand("AI3 hand: ");
-	choose1AITrumpSuit();
-	playerAddToTableHand(getTrumpSuitString());
-	ai1AddToTableHand(getTrumpSuitString());
-	ai2AddToTableHand(getTrumpSuitString());
-	ai3AddToTableHand(getTrumpSuitString());
-	std::cout << "Player: " << player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())).getRank() << std::endl;
+	playerAddToTableHand();
+	ai1AddToTableHand();
+	ai2AddToTableHand();
+	ai3AddToTableHand();
+	
+	std::cout << "Player: " << player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())).getRank() << player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())).getSuit() << std::endl;
 	std::cout << "ai1: " << ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())).getRank() << std::endl;
 	std::cout << "ai2: " << ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())).getRank() << std::endl;
 	std::cout << "ai3: " << ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())).getRank() << std::endl;
@@ -28,6 +29,13 @@ void GameBoard::gameTable()
 		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())), 
 		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
 		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+	//player.showHand("Player hand:");
+	//std::cout << "======================================" << std::endl;
+	//ai1.showHand("AI1 hand: ");
+	//std::cout << "======================================" << std::endl;
+	//ai2.showHand("AI2 hand: ");
+	//std::cout << "======================================" << std::endl;
+	//ai3.showHand("AI3 hand: ");
 }
 
 void GameBoard::buildCardDeck()
@@ -50,30 +58,28 @@ void GameBoard::replenishDeck()
 }
 ////TODO note Now that this adds to tableHand, once all players have placed a card then cardValueCheck claass needs to check what is the highest value for each card. 
 ////Was going to use anothehr vector but I didn't want to bother with it because I wouldn't be able to know who's card is who.
-void GameBoard::playerAddToTableHand(std::string suit) 
+void GameBoard::playerAddToTableHand() 
 {
-	player.userChoosesCardToPlay(suit);
+	player.userChoosesCardToPlay(getTrumpSuitString(), getTrumpRed());
 	playerCardValue = checkTableHandValues(player.getCardThatIsChosenToPlay((player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank()))));
 }
 
-void GameBoard::ai1AddToTableHand(std::string suit)
+void GameBoard::ai1AddToTableHand()
 {
-	ai1.userChoosesCardToPlay(suit);
-
-
+	ai1.userChoosesCardToPlay(getTrumpSuitString(), getTrumpRed());
 	ai1CardValue = checkTableHandValues(ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())));
 }
 
-void GameBoard::ai2AddToTableHand(std::string suit)
+void GameBoard::ai2AddToTableHand()
 {
-	ai2.userChoosesCardToPlay(suit);
+	ai2.userChoosesCardToPlay(getTrumpSuitString(), getTrumpRed());
 	ai2CardValue = checkTableHandValues(ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())));
 
 }
 
-void GameBoard::ai3AddToTableHand(std::string suit)
+void GameBoard::ai3AddToTableHand()
 {
-	ai3.userChoosesCardToPlay(suit);
+	ai3.userChoosesCardToPlay(getTrumpSuitString(), getTrumpRed());
 	ai3CardValue = checkTableHandValues(ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
 
 }
@@ -96,6 +102,43 @@ int GameBoard::checkTableHandValues(Cards card)
 void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Card, Cards ai3Card)
 {
 	bool team1Win = false;
+	if (playerCardValue > ai1CardValue) {
+		if (playerCardValue > ai3CardValue) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
+
+	if (playerCardValue > ai3CardValue) {
+		if (playerCardValue > ai1CardValue) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
+
+	if (ai2CardValue > ai1CardValue) {
+		if (ai2CardValue > ai3CardValue) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
+
+
+	if (ai2CardValue > ai3CardValue) {
+		if (ai2CardValue > ai1CardValue) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
+
 	if (playerCardValue > ai1CardValue && playerCard.getSuit() == getTrumpSuitString()) {
 		if (playerCardValue > ai3CardValue && playerCard.getSuit() == getTrumpSuitString()) {
 			team1Win = true;
@@ -104,8 +147,17 @@ void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Ca
 			team1Win = false;
 		}
 	}
+
+	if (playerCardValue > ai3CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+		if (playerCardValue > ai1CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
 	
-	else if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+	if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
 		if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
 			team1Win = true;
 		}
@@ -113,6 +165,17 @@ void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Ca
 			team1Win = false;
 		}
 	}
+
+	if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+		if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+			team1Win = true;
+		}
+		else {
+			team1Win = false;
+		}
+	}
+
+
 
 	if (team1Win) {
 		team1Check++;

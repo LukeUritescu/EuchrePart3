@@ -44,10 +44,10 @@ public:
 	std::string getTrumpSuitString();
 	bool getTrumpRed();
 
-	void playerAddToTableHand(std::string suit);
-	void ai1AddToTableHand(std::string suit);
-	void ai2AddToTableHand(std::string suit);
-	void ai3AddToTableHand(std::string suit);
+	void playerAddToTableHand();
+	void ai1AddToTableHand();
+	void ai2AddToTableHand();
+	void ai3AddToTableHand();
 
 	void endTheProcess();
 
