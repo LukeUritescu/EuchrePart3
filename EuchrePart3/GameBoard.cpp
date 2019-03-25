@@ -2,13 +2,12 @@
 #include "GameBoard.h"
 
 
-//ADD IN SECOND ROUND RULES WHERE YOU HAHVE TO PLAY THE SUIT THE FIRST PERSON PLAYED IF YOU HAVE A CARD OF THAT SUIT IF NOT THEN YOU CAN PLAY ANY CARD
 void GameBoard::gameTable()
 {
 
 	buildCardDeck();
 	chooseDealer(false, true, false, false);
-	//std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
+	std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
 	//player.showHand("Player hand:");
 	//std::cout << "======================================" << std::endl;
 	//ai1.showHand("AI1 hand: ");
@@ -16,40 +15,21 @@ void GameBoard::gameTable()
 	//ai2.showHand("AI2 hand: ");
 	//std::cout << "======================================" << std::endl;
 	//ai3.showHand("AI3 hand: ");
-	determineHandWinner(
-		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())), 
-		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())), 
-		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
-		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
-	discardTableHand();
-	AI1Dealer();
-	determineHandWinner(
-		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
-		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
-		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
-		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
-	discardTableHand();
-	AI1Dealer();
-	determineHandWinner(
-		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
-		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
-		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
-		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
-	discardTableHand();
-	AI1Dealer();
-	determineHandWinner(
-		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
-		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
-		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
-		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
-	discardTableHand();
-	AI1Dealer();
-	determineHandWinner(
-		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
-		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
-		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
-		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
-	discardTableHand();
+
+	//Add functions for each person as a dealer and playing a hand 
+
+	for (int i = 0; i < 5; ++i)
+	{
+		AI1Dealer();
+		determineHandWinner(
+			player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
+			ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
+			ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
+			ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+
+		discardTableHand();
+	}
+	
 	//player.showHand("Player hand:");
 	//std::cout << "======================================" << std::endl;
 	//ai1.showHand("AI1 hand: ");
@@ -224,25 +204,21 @@ void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 		std::cout << "Player is the dealer" << std::endl;
 		playerDeals();
 		choosePlayerTrumpSuit();
-		playerDealer();
 	}
 	else if (ai1) {
 		std::cout << "AI1 is the dealer" << std::endl;
 		AI1Deals();
 		choose1AITrumpSuit();
-		AI1Dealer();
 	}
 	else if (ai2) {
 		std::cout << "AI2 is the dealer" << std::endl;		
 		AI2Deals();
 		choose2AITrumpSuit();
-		AI2Dealer();
 	}
 	else if (ai3) {
 		std::cout << "AI3 is the dealer" << std::endl;
 		AI3Deals();
 		choose3AITrumpSuit();
-		AI3Dealer();
 	}
 
 }
