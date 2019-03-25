@@ -35,15 +35,13 @@ void User::showHand(std::string name)
 
 int User::getIndexOfCardThatIsChosenToPlay(std::string suit, std::string rank)
 {
-	int i = 0;
 	int index = 0;
 	
 
 	for (std::vector<Cards>::iterator it = hand.begin(); it != hand.end(); ++it)
 	{
 		if (it->getSuit() == suit && it->getRank() == rank)
-			index = i;
-		i++;
+			index = it - hand.begin();
 	}
 	return index;
 }
@@ -113,13 +111,11 @@ void User::userChoosesCardToPlay(std::string chooseCardDependingOnSuit, bool cho
 			}
 		}
 	}
-	//removeCardPlaced();
-
 }
 
 void User::removeCardPlaced() 
 {
-		hand.erase(hand.begin() + 3);
+		hand.erase(hand.begin() + getIndexOfCardThatIsChosenToPlay(getChosenCardSuit(), getChosenCardRank()));
 }
 std::string User::getChosenCardSuit()
 {

@@ -18,6 +18,7 @@ class GameBoard
 public:
 	void buildCardDeck();
 	Cards dealCards();
+	void discardTableHand();
 
 	void gameTable();
 
@@ -36,6 +37,11 @@ public:
 	void AI2Dealer();
 	void AI3Dealer();
 
+	void playerDeals();
+	void AI1Deals();
+	void AI2Deals();
+	void AI3Deals();
+
 	void choosePlayerTrumpSuit();
 	void choose1AITrumpSuit();
 	void choose2AITrumpSuit();
@@ -48,6 +54,12 @@ public:
 	void ai1AddToTableHand();
 	void ai2AddToTableHand();
 	void ai3AddToTableHand();
+
+	void WhoseTurnToPlay();
+	void playerPlayRound();
+	void ai1PlayRound();
+	void ai2PlayRound();
+	void ai3PlayRound();
 
 	void endTheProcess();
 
@@ -71,7 +83,6 @@ protected:
 	int ai1CardValue;
 	int ai2CardValue;
 	int ai3CardValue;
-
 };
 
 #endif // !EUCHRE_GAMEBOARD_H

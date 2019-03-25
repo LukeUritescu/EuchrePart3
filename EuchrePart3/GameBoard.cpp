@@ -1,34 +1,55 @@
 #include "pch.h"
 #include "GameBoard.h"
 
+
+//ADD IN SECOND ROUND RULES WHERE YOU HAHVE TO PLAY THE SUIT THE FIRST PERSON PLAYED IF YOU HAVE A CARD OF THAT SUIT IF NOT THEN YOU CAN PLAY ANY CARD
 void GameBoard::gameTable()
 {
+
 	buildCardDeck();
-	AI1Dealer();
-	topCardSuit();
-	choose1AITrumpSuit();
-	player.showHand("Player hand:");
-	std::cout << "======================================" << std::endl;
-	ai1.showHand("AI1 hand: ");
-	std::cout << "======================================" << std::endl;
-	ai2.showHand("AI2 hand: ");
-	std::cout << "======================================" << std::endl;
-	ai3.showHand("AI3 hand: ");
-	playerAddToTableHand();
-	ai1AddToTableHand();
-	ai2AddToTableHand();
-	ai3AddToTableHand();
-	
-	std::cout << "Player: " << player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())).getRank() << player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())).getSuit() << std::endl;
-	std::cout << "ai1: " << ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())).getRank() << std::endl;
-	std::cout << "ai2: " << ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())).getRank() << std::endl;
-	std::cout << "ai3: " << ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())).getRank() << std::endl;
-	//TO DO: PLAYERS ARE NOT PLAYING LEFT BOWER 
+	chooseDealer(false, true, false, false);
+	//std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
+	//player.showHand("Player hand:");
+	//std::cout << "======================================" << std::endl;
+	//ai1.showHand("AI1 hand: ");
+	//std::cout << "======================================" << std::endl;
+	//ai2.showHand("AI2 hand: ");
+	//std::cout << "======================================" << std::endl;
+	//ai3.showHand("AI3 hand: ");
 	determineHandWinner(
 		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())), 
 		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())), 
 		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
 		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+	discardTableHand();
+	AI1Dealer();
+	determineHandWinner(
+		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
+		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
+		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
+		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+	discardTableHand();
+	AI1Dealer();
+	determineHandWinner(
+		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
+		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
+		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
+		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+	discardTableHand();
+	AI1Dealer();
+	determineHandWinner(
+		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
+		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
+		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
+		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+	discardTableHand();
+	AI1Dealer();
+	determineHandWinner(
+		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
+		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
+		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
+		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+	discardTableHand();
 	//player.showHand("Player hand:");
 	//std::cout << "======================================" << std::endl;
 	//ai1.showHand("AI1 hand: ");
@@ -37,6 +58,8 @@ void GameBoard::gameTable()
 	//std::cout << "======================================" << std::endl;
 	//ai3.showHand("AI3 hand: ");
 }
+
+
 
 void GameBoard::buildCardDeck()
 {
@@ -56,8 +79,14 @@ void GameBoard::replenishDeck()
 		buildCardDeck();
 	}
 }
-////TODO note Now that this adds to tableHand, once all players have placed a card then cardValueCheck claass needs to check what is the highest value for each card. 
-////Was going to use anothehr vector but I didn't want to bother with it because I wouldn't be able to know who's card is who.
+
+void GameBoard::discardTableHand() {
+	player.removeCardPlaced();
+	ai1.removeCardPlaced();
+	ai2.removeCardPlaced();
+	ai3.removeCardPlaced();
+}
+
 void GameBoard::playerAddToTableHand() 
 {
 	player.userChoosesCardToPlay(getTrumpSuitString(), getTrumpRed());
@@ -74,14 +103,12 @@ void GameBoard::ai2AddToTableHand()
 {
 	ai2.userChoosesCardToPlay(getTrumpSuitString(), getTrumpRed());
 	ai2CardValue = checkTableHandValues(ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())));
-
 }
 
 void GameBoard::ai3AddToTableHand()
 {
 	ai3.userChoosesCardToPlay(getTrumpSuitString(), getTrumpRed());
 	ai3CardValue = checkTableHandValues(ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
-
 }
 
 int GameBoard::checkTableHandValues(Cards card)
@@ -97,6 +124,8 @@ int GameBoard::checkTableHandValues(Cards card)
 	}
 
 }
+
+
 
 ///Take in  trump suit and the card value given ranking theem
 void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Card, Cards ai3Card)
@@ -179,11 +208,11 @@ void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Ca
 
 	if (team1Win) {
 		team1Check++;
-		std::cout << "Team 1 Wins!";
+		std::cout << "Team 1 Wins!" << std::endl;
 	}
 	else {
 		team2Check++;
-		std::cout << "Team 2 Wins!";
+		std::cout << "Team 2 Wins!" << std::endl;
 	}
 }
 
@@ -191,42 +220,82 @@ void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Ca
 ///This function isn't needed
 void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 {
-	/*if (player) {
+	if (player) {
 		std::cout << "Player is the dealer" << std::endl;
-		playerDealer();
+		playerDeals();
 		choosePlayerTrumpSuit();
+		playerDealer();
 	}
 	else if (ai1) {
+		std::cout << "AI1 is the dealer" << std::endl;
+		AI1Deals();
+		choose1AITrumpSuit();
 		AI1Dealer();
 	}
 	else if (ai2) {
-		AI2Dealer();
+		std::cout << "AI2 is the dealer" << std::endl;		
+		AI2Deals();
 		choose2AITrumpSuit();
+		AI2Dealer();
 	}
 	else if (ai3) {
-		AI3Dealer();
+		std::cout << "AI3 is the dealer" << std::endl;
+		AI3Deals();
 		choose3AITrumpSuit();
-	}*/
+		AI3Dealer();
+	}
 
 }
 
-
 void GameBoard::playerDealer()
 {
-	//first pass default 3 cards
-	AI1Pass();
-	AI2Pass();
-	AI3Pass();
-	playerPass();
-	//second pass 2 cards
-	AI1Pass(2);
-	AI2Pass(2);
-	AI3Pass(2);
-	playerPass(2);
+	ai1AddToTableHand();
+	ai2AddToTableHand();
+	ai3AddToTableHand();
+	playerAddToTableHand();
 }
 
 void GameBoard::AI1Dealer()
 {
+	ai2AddToTableHand();
+	ai3AddToTableHand();
+	playerAddToTableHand();
+	ai1AddToTableHand();
+}
+
+void GameBoard::AI2Dealer()
+{
+	ai3AddToTableHand();
+	ai1AddToTableHand();
+	playerAddToTableHand();
+	ai2AddToTableHand();
+}
+
+void GameBoard::AI3Dealer()
+{
+	playerAddToTableHand();
+	ai1AddToTableHand();
+	ai2AddToTableHand();
+	ai3AddToTableHand();
+}
+
+
+void GameBoard::playerDeals()
+{
+	//first pass default 3 cards
+	AI1Pass();
+	AI2Pass();
+	AI3Pass();
+	playerPass();
+	//second pass 2 cards
+	AI1Pass(2);
+	AI2Pass(2);
+	AI3Pass(2);
+	playerPass(2);
+}
+
+void GameBoard::AI1Deals()
+{
 	//first pass default 3 cards
 	AI2Pass();
 	AI3Pass();
@@ -239,7 +308,7 @@ void GameBoard::AI1Dealer()
 	AI1Pass(2);
 }
 
-void GameBoard::AI2Dealer()
+void GameBoard::AI2Deals()
 {
 	//first pass default 3 cards
 	AI3Pass();
@@ -253,7 +322,7 @@ void GameBoard::AI2Dealer()
 	AI2Pass(2);
 }
 
-void GameBoard::AI3Dealer()
+void GameBoard::AI3Deals()
 {
 	//first pass default 3 cards
 	playerPass();
@@ -270,7 +339,7 @@ void GameBoard::AI3Dealer()
 
 void GameBoard::topCardSuit()
 {
-	std::cout << "Trump Suit: " << tableDeck.trumpCard() << std::endl;
+	std::cout << "Top Card: " << tableDeck.trumpCard() << std::endl;
 	if (tableDeck.trumpCard() == "Diamonds" || tableDeck.trumpCard() == "Hearts")
 		red = true;
 	else
@@ -293,7 +362,7 @@ void GameBoard::trumpSuit(std::string suit, bool red)
 	trumpRed = red;
 }
 
-//Future Luke, see if yo can condense these 4 methods into one. 
+//Future Luke, see if you can condense these 4 methods into one. 
 void GameBoard::playerPass(int numberCardDeal)
 {
 	for (int i = 0; i < numberCardDeal; i++) {
