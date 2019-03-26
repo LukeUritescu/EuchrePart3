@@ -18,9 +18,8 @@ void User::dealDropsWorstCard(bool trumpRed)
 		//This is to check the values 
 		if (tempCardValue > it->getValue() && it->getRank() != "Jack") {
 			tempCardValue = it->getValue();
-			tempCardIndex = i;
+			tempCardIndex = it - hand.begin();
 		}
-		i++;
 	}
 	hand.erase(hand.begin() + tempCardIndex);
 }
