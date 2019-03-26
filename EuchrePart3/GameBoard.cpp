@@ -92,14 +92,14 @@ int GameBoard::checkTableHandValues(Cards card)
 void GameBoard::theWinner()
 {
 	std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
-	std::cout << "================" << std::endl;
-	player.showHand("Player");
-	std::cout << "================" << std::endl;
-	ai1.showHand("AI1");
-	std::cout << "================" << std::endl;
-	ai2.showHand("AI2");
-	std::cout << "================" << std::endl;
-	ai3.showHand("AI3");
+	//std::cout << "================" << std::endl;
+	//player.showHand("Player");
+	//std::cout << "================" << std::endl;
+	//ai1.showHand("AI1");
+	//std::cout << "================" << std::endl;
+	//ai2.showHand("AI2");
+	//std::cout << "================" << std::endl;
+	//ai3.showHand("AI3");
 	determineHandWinner(
 		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
 		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
