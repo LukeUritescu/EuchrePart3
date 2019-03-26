@@ -7,9 +7,20 @@ void GameBoard::gameTable()
 
 	buildCardDeck();
 	chooseDealer(false, true, false, false);
-	std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
+	//std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
+	/*std::cout << "================" << std::endl;
+	player.showHand("Player");
+	std::cout << "================" << std::endl;
+	ai1.showHand("AI1");
+	std::cout << "================" << std::endl;
+	ai2.showHand("AI2");
+	std::cout << "================" << std::endl;
+	ai3.showHand("AI3");
+*/
 	ai1PlayRound();
-	
+	std::cout << "Scores: " << std::endl;
+	std::cout << "Team1 consisting of Player and ai2: " << team1Check << std::endl;
+	std::cout << "Team2 consiting of ai1 and ai2: " << team2Check << std::endl;
 }
 
 
@@ -80,6 +91,15 @@ int GameBoard::checkTableHandValues(Cards card)
 
 void GameBoard::theWinner()
 {
+	std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
+	std::cout << "================" << std::endl;
+	player.showHand("Player");
+	std::cout << "================" << std::endl;
+	ai1.showHand("AI1");
+	std::cout << "================" << std::endl;
+	ai2.showHand("AI2");
+	std::cout << "================" << std::endl;
+	ai3.showHand("AI3");
 	determineHandWinner(
 		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
 		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
@@ -124,88 +144,78 @@ void GameBoard::ai3PlayRound() {
 void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Card, Cards ai3Card)
 {
 	bool team1Win = false;
-	if (playerCardValue > ai1CardValue) {
-		if (playerCardValue > ai3CardValue) {
+	std::string winningSuit;
+	std::string winningRank;
+	if (playerCard.getSuit() == getTrumpSuitString() && ai1Card.getSuit() != getTrumpSuitString() && ai3Card.getSuit() != getTrumpSuitString()) {
 			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
 	}
 
-	if (playerCardValue > ai3CardValue) {
-		if (playerCardValue > ai1CardValue) {
-			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
+	if (ai2Card.getSuit() == getTrumpSuitString() && ai1Card.getSuit() != getTrumpSuitString() && ai3Card.getSuit() != getTrumpSuitString()) {
+		team1Win = true;
 	}
 
-	if (ai2CardValue > ai1CardValue) {
-		if (ai2CardValue > ai3CardValue) {
+	if (playerCardValue > ai1CardValue && playerCardValue > ai3CardValue) {
 			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
 	}
 
-
-	if (ai2CardValue > ai3CardValue) {
-		if (ai2CardValue > ai1CardValue) {
+	if (ai2CardValue > ai1CardValue && ai2CardValue > ai3CardValue) {
 			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
 	}
 
-	if (playerCardValue > ai1CardValue && playerCard.getSuit() == getTrumpSuitString()) {
-		if (playerCardValue > ai3CardValue && playerCard.getSuit() == getTrumpSuitString()) {
-			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
-	}
-
-	if (playerCardValue > ai3CardValue && playerCard.getSuit() == getTrumpSuitString()) {
-		if (playerCardValue > ai1CardValue && playerCard.getSuit() == getTrumpSuitString()) {
-			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
-	}
 	
-	if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-		if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
-	}
 
-	if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-		if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-			team1Win = true;
-		}
-		else {
-			team1Win = false;
-		}
-	}
+	//if (playerCardValue > ai3CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+	//	if (playerCardValue > ai1CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+	//		team1Win = true;
+	//	}
+	//	else {
+	//		team1Win = false;
+	//	}
+	//}
+	//
+	//if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+	//	if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+	//		team1Win = true;
+	//	}
+	//	else {
+	//		team1Win = false;
+	//	}
+	//}
+
+	//if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+	//	if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
+	//		team1Win = true;
+	//	}
+	//	else {
+	//		team1Win = false;
+	//	}
+	//}
 
 
 
 	if (team1Win) {
 		team1Check++;
-		std::cout << "Team 1 Wins!" << std::endl;
+		if (playerCardValue >= ai2CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+			winningSuit = playerCard.getSuit();
+			winningRank = playerCard.getRank();
+		}
+		else {
+			winningSuit = ai2Card.getSuit();
+			winningRank = ai2Card.getRank();
+		}
+		std::cout << "Team 1 Wins with the " << winningRank << " of " << winningSuit << std::endl;
 	}
-	else {
+	if (team1Win == false){
 		team2Check++;
-		std::cout << "Team 2 Wins!" << std::endl;
+		if (ai1CardValue >= ai3CardValue && ai1Card.getSuit() == getTrumpSuitString()) {
+			winningSuit = ai1Card.getSuit();
+			winningRank = ai1Card.getRank();
+		}
+		else {
+			winningSuit = ai3Card.getSuit();
+			winningRank = ai3Card.getRank();
+		}
+		std::cout << "Team 2 Wins with the " << winningRank << " of " << winningSuit << std::endl;
 	}
 }
 

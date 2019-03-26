@@ -110,6 +110,7 @@ void User::userChoosesCardToPlay(std::string chooseCardDependingOnSuit, bool cho
 			}
 		}
 	}
+	//std::cout << getChosenCardRank() << getChosenCardSuit() << std::endl;
 }
 
 void User::removeCardPlaced() 
@@ -192,8 +193,6 @@ void User::decisionOnTrumpCard(std::string suit, bool red)
 	}
 	else
 		shouldThisTopCardBeTrump = false;
-
-
 
 }
 
