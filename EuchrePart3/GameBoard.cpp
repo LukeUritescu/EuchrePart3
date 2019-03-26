@@ -162,40 +162,14 @@ void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Ca
 			team1Win = true;
 	}
 
-	
-
-	//if (playerCardValue > ai3CardValue && playerCard.getSuit() == getTrumpSuitString()) {
-	//	if (playerCardValue > ai1CardValue && playerCard.getSuit() == getTrumpSuitString()) {
-	//		team1Win = true;
-	//	}
-	//	else {
-	//		team1Win = false;
-	//	}
-	//}
-	//
-	//if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-	//	if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-	//		team1Win = true;
-	//	}
-	//	else {
-	//		team1Win = false;
-	//	}
-	//}
-
-	//if (ai2CardValue > ai3CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-	//	if (ai2CardValue > ai1CardValue && ai2Card.getSuit() == getTrumpSuitString()) {
-	//		team1Win = true;
-	//	}
-	//	else {
-	//		team1Win = false;
-	//	}
-	//}
-
-
 
 	if (team1Win) {
 		team1Check++;
-		if (playerCardValue >= ai2CardValue && playerCard.getSuit() == getTrumpSuitString()) {
+		if (playerCardValue >= ai2CardValue) {
+			winningSuit = playerCard.getSuit();
+			winningRank = playerCard.getRank();
+		}
+		else if (playerCardValue < ai2CardValue && playerCard.getSuit() == getTrumpSuitString() && ai2Card.getSuit() != getTrumpSuitString()) {
 			winningSuit = playerCard.getSuit();
 			winningRank = playerCard.getRank();
 		}
@@ -207,7 +181,11 @@ void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Ca
 	}
 	if (team1Win == false){
 		team2Check++;
-		if (ai1CardValue >= ai3CardValue && ai1Card.getSuit() == getTrumpSuitString()) {
+		if (ai1CardValue >= ai3CardValue) {
+			winningSuit = ai1Card.getSuit();
+			winningRank = ai1Card.getRank();
+		}
+		else if (ai1CardValue < ai3CardValue && ai1Card.getSuit() == getTrumpSuitString() && ai3Card.getSuit() != getTrumpSuitString()) {
 			winningSuit = ai1Card.getSuit();
 			winningRank = ai1Card.getRank();
 		}
