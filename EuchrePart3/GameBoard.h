@@ -42,6 +42,8 @@ public:
 	void AI2Deals();
 	void AI3Deals();
 
+	void theDecisionOfTrumpCard();
+
 	void choosePlayerTrumpSuit();
 	void choose1AITrumpSuit();
 	void choose2AITrumpSuit();
@@ -55,7 +57,7 @@ public:
 	void ai2AddToTableHand();
 	void ai3AddToTableHand();
 
-	void WhoseTurnToPlay();
+	void theWinner();
 	void playerPlayRound();
 	void ai1PlayRound();
 	void ai2PlayRound();

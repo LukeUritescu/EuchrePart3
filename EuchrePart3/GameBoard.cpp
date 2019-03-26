@@ -8,35 +8,8 @@ void GameBoard::gameTable()
 	buildCardDeck();
 	chooseDealer(false, true, false, false);
 	std::cout << "Trump suit: " << getTrumpSuitString() << std::endl;
-	//player.showHand("Player hand:");
-	//std::cout << "======================================" << std::endl;
-	//ai1.showHand("AI1 hand: ");
-	//std::cout << "======================================" << std::endl;
-	//ai2.showHand("AI2 hand: ");
-	//std::cout << "======================================" << std::endl;
-	//ai3.showHand("AI3 hand: ");
-
-	//Add functions for each person as a dealer and playing a hand 
-
-	for (int i = 0; i < 5; ++i)
-	{
-		AI1Dealer();
-		determineHandWinner(
-			player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
-			ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
-			ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
-			ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
-
-		discardTableHand();
-	}
+	ai1PlayRound();
 	
-	//player.showHand("Player hand:");
-	//std::cout << "======================================" << std::endl;
-	//ai1.showHand("AI1 hand: ");
-	//std::cout << "======================================" << std::endl;
-	//ai2.showHand("AI2 hand: ");
-	//std::cout << "======================================" << std::endl;
-	//ai3.showHand("AI3 hand: ");
 }
 
 
@@ -105,7 +78,47 @@ int GameBoard::checkTableHandValues(Cards card)
 
 }
 
+void GameBoard::theWinner()
+{
+	determineHandWinner(
+		player.getCardThatIsChosenToPlay(player.getIndexOfCardThatIsChosenToPlay(player.getChosenCardSuit(), player.getChosenCardRank())),
+		ai1.getCardThatIsChosenToPlay(ai1.getIndexOfCardThatIsChosenToPlay(ai1.getChosenCardSuit(), ai1.getChosenCardRank())),
+		ai2.getCardThatIsChosenToPlay(ai2.getIndexOfCardThatIsChosenToPlay(ai2.getChosenCardSuit(), ai2.getChosenCardRank())),
+		ai3.getCardThatIsChosenToPlay(ai3.getIndexOfCardThatIsChosenToPlay(ai3.getChosenCardSuit(), ai3.getChosenCardRank())));
+}
 
+void GameBoard::playerPlayRound() {
+	
+		for (int i = 0; i < 5; ++i) {
+			playerDealer();
+			theWinner();
+			discardTableHand();
+		}
+}
+
+void GameBoard::ai1PlayRound() {
+	for(int i = 0; i < 5; ++i){
+		AI1Dealer();
+		theWinner();
+		discardTableHand();
+	}
+}
+
+void GameBoard::ai2PlayRound() {
+	for(int i = 0; i < 5; ++i){
+		AI2Dealer();
+		theWinner();
+		discardTableHand();
+	}
+}
+
+void GameBoard::ai3PlayRound() {
+	for(int i = 0; i < 5; ++i){
+		AI3Dealer();
+		theWinner();
+		discardTableHand();
+	}
+}
 
 ///Take in  trump suit and the card value given ranking theem
 void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Card, Cards ai3Card)
@@ -197,7 +210,6 @@ void GameBoard::determineHandWinner(Cards playerCard, Cards ai1Card, Cards ai2Ca
 }
 
 
-///This function isn't needed
 void GameBoard::chooseDealer(bool player, bool ai1, bool ai2, bool ai3)
 {
 	if (player) {
@@ -367,13 +379,17 @@ void GameBoard::AI3Pass(int numberCardDeal)
 	}
 }
 
+void GameBoard::theDecisionOfTrumpCard() {
+	player.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+	ai1.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+	ai2.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+	ai3.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+}
+
 //ALLL these functions below with choose... are the same just switched the order of players
 void GameBoard::choose1AITrumpSuit()
 {
-	ai2.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	player.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai3.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai1.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+	theDecisionOfTrumpCard();
 	if (ai2.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "ai2 chose suit" << std::endl;
@@ -408,10 +424,7 @@ void GameBoard::choose1AITrumpSuit()
 
 void GameBoard::choose2AITrumpSuit()
 {
-	ai3.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	player.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai1.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai2.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+	theDecisionOfTrumpCard();
 	if (ai3.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "ai3 chose suit" << std::endl;
@@ -445,10 +458,7 @@ void GameBoard::choose2AITrumpSuit()
 
 void GameBoard::choose3AITrumpSuit()
 {
-	player.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai1.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai2.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai3.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+	theDecisionOfTrumpCard();
 	if (player.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "player chose suit" << std::endl;
@@ -482,10 +492,7 @@ void GameBoard::choose3AITrumpSuit()
 
 void GameBoard::choosePlayerTrumpSuit()
 {
-	ai1.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai2.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	ai3.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
-	player.decisionOnTrumpCard(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
+	theDecisionOfTrumpCard();
 	if (ai1.getShouldThisTopCardBeTrump()) {
 		trumpSuit(tableDeck.trumpCard(), tableDeck.showTrumpSuit());
 		std::cout << "ai1 chose suit" << std::endl;
